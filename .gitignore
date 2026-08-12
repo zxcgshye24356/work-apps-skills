@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# 本地运行产物（用户电脑生成的，不应入库）
+history/
+.streamlit/
+
+# 系统/编辑器
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
