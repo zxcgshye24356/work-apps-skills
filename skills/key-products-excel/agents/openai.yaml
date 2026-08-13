@@ -1,0 +1,4 @@
+interface:
+  display_name: "重点产品 Excel 整理"
+  short_description: "整理重点产品并续接进度"
+  default_prompt: "Use $key-products-excel to organize the key products from the Word file into Excel."
