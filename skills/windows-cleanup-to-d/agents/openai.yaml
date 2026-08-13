@@ -1,0 +1,4 @@
+interface:
+  display_name: "Windows 电脑清理与数据迁移"
+  short_description: "C盘清理、软件数据迁移与备份"
+  default_prompt: 'Use $windows-cleanup-to-d to audit the C drive and move safe leftovers to another drive.'
