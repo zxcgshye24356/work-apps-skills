@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>个人网站 · Starter</title>
+<style>
+  :root{
+    --bg:#B5C1C8; --bg-light:#C9D2D7; --bg-dark:#A9B7BF;
+    --cream:#F5F6F8; --ink:#1A1A1A; --accent:#2C4C3B; --muted:#5C666B;
+    --font: system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    --ease:cubic-bezier(.25,.46,.45,.94);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--font);background:linear-gradient(135deg,var(--bg-light),var(--bg) 50%,var(--bg-dark));
+    color:var(--ink);line-height:1.6;min-height:100vh}
+  .nav{position:sticky;top:0;z-index:20;display:flex;gap:18px;align-items:center;padding:14px 24px;
+    background:rgba(245,246,248,.55);backdrop-filter:blur(8px)}
+  .nav a{color:var(--ink);text-decoration:none;font-size:14px;opacity:.8}
+  .nav a:hover,.nav a:focus-visible{opacity:1;color:var(--accent);outline:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:72px 24px 96px}
+  .eyebrow{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+  .display{font-size:clamp(30px,5vw,52px);font-weight:300;margin:8px 0;letter-spacing:-.02em}
+  .lead{color:var(--muted);font-size:15px;max-width:560px}
+  .spacer{height:32px}
+  .btn{display:inline-block;margin-top:18px;padding:10px 22px;border-radius:999px;border:1px solid var(--accent);
+    background:var(--cream);color:var(--accent);text-decoration:none;font-size:14px;cursor:pointer}
+  .btn:hover,.btn:focus-visible{background:#fff;outline:none}
+  .page{display:none;animation:fade .4s var(--ease)}
+  .page.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="主导航">
+  <a href="#/home" data-link>Home</a>
+  <a href="#/work" data-link>Work</a>
+  <a href="#/contact" data-link>Contact</a>
+</nav>
+
+<main class="wrap">
+  <section class="page active" id="page-home" data-route="home">
+    <p class="eyebrow">Personal Site</p>
+    <h1 class="display">你的名字</h1>
+    <p class="lead">一句话介绍你自己。这里是 Hero，只放名字 + 一句身份，留白 ≥ 30%。</p>
+    <a class="btn" href="#/work" data-link>看看我的作品 →</a>
+  </section>
+
+  <section class="page" id="page-work" data-route="work">
+    <p class="eyebrow">Work</p>
+    <h1 class="display">作品</h1>
+    <p class="lead">把每个项目做成一张卡片；封面用雾霾蓝 SVG（参考 design_system.md 的 Work 规范）。</p>
+  </section>
+
+  <section class="page" id="page-contact" data-route="contact">
+    <p class="eyebrow">Contact</p>
+    <h1 class="display">保持联系</h1>
+    <p class="lead">邮箱 / 飞书二维码 / GitHub。GitHub 链接到位后换成真实 &lt;a href&gt;。</p>
+  </section>
+</main>
+
+<script>
+  const routes = {
+    home:   'page-home',
+    work:   'page-work',
+    contact:'page-contact'
+  };
+  function showRoute(name){
+    const id = routes[name] || routes.home;
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  function routeFromHash(){
+    const h = location.hash.replace('#/','') || 'home';
+    showRoute(h);
+  }
+  window.addEventListener('hashchange', routeFromHash);
+  document.querySelectorAll('[data-link]').forEach(a=>a.addEventListener('click',()=>routeFromHash()));
+  routeFromHash();
+</script>
+</body>
+</html>
