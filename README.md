@@ -6,6 +6,18 @@
 
 ---
 
+## Skills 合集
+
+本仓库收集可直接复用的 Skill，每个放在 `skills/` 目录下，含 `SKILL.md`（说明 + 工作流）。
+
+| Skill | 一句话说明 | 适用场景 |
+|-------|-----------|---------|
+| [personal-website-builder](skills/personal-website-builder) | 通用版个人网站构建：单文件 HTML、极简/解构风格、雾霾蓝设计系统、无障碍、CloudStudio 部署 | 想快速做个人作品集 / 博客站 |
+| [key-products-excel](skills/key-products-excel) | 从 Word 重点产品文档批量整理成 Excel（按品牌分 Sheet、可续接进度） | 新研博美 / 凯新生物等重点产品筛选整理 |
+| [windows-cleanup-to-d](skills/windows-cleanup-to-d) | Windows C 盘安全清理与软件数据迁移到 D 盘（只读扫描优先、可回退） | 清理 C 盘空间、迁移应用数据到其它盘 |
+
+---
+
 ## 它能做什么
 
 - **批量检测**：一次上传几十个产品，自动逐个去百度第一页搜索、逐篇打开文章。
