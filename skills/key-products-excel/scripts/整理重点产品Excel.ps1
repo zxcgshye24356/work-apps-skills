@@ -670,6 +670,15 @@ function Add-DocxProgressMark {
         $doc.LoadXml($xml)
         $ns = New-Object System.Xml.XmlNamespaceManager($doc.NameTable)
         $ns.AddNamespace('w', $w)
+        $paras = @($doc.SelectNodes('//w:p', $ns))
+        $targets = New-Object System.Collections.Generic.List[object]
+        foreach ($idx in @($NewyanPara, $KaixinPara)) {
+            if ($idx -ge 0 -and $idx -lt $paras.Count) {
+                $targets.Add($paras[$idx])
+            } else {
+                $targets.Add($null)
+            }
+        }
         $allParas = @($doc.SelectNodes('//w:p', $ns))
         foreach ($oldP in $allParas) {
             $oldText = ''
@@ -680,17 +689,8 @@ function Add-DocxProgressMark {
                 [void]$oldP.ParentNode.RemoveChild($oldP)
             }
         }
-        $paras = @($doc.SelectNodes('//w:p', $ns))
-        foreach ($idx in @($NewyanPara, $KaixinPara)) {
-            if ($idx -lt 0 -or $idx -ge $paras.Count) { continue }
-            if ($idx + 1 -lt $paras.Count) {
-                $nextText = ''
-                foreach ($t in $paras[$idx + 1].SelectNodes('.//w:t', $ns)) {
-                    $nextText += $t.InnerText
-                }
-                if ($nextText -like '【已整理至*') { continue }
-            }
-            $target = $paras[$idx]
+        foreach ($target in $targets) {
+            if ($null -eq $target) { continue }
             $newP = $doc.CreateElement('w', 'p', $w)
             $pPr = $doc.CreateElement('w', 'pPr', $w)
             [void]$newP.AppendChild($pPr)
@@ -752,6 +752,7 @@ for ($i = 0; $i -lt $paras.Count; $i++) {
         $bodyNoUrl = $t -replace 'https?://\S+', ''
         $isNonProduct = $t -match '^https?://\S+$' -or ($t -match '^https?://' -and $bodyNoUrl -notmatch '[A-Za-z]')
         if ($isNonProduct) { continue }
+        if ($t -notmatch '^\s*\d+\s*[\.．]') { continue }
         $cum[$currentBrand]++
         $global = $cum[$currentBrand]
         $target = if ($currentBrand -eq '新研博美') { $newyanTarget } else { $kaixinTarget }
